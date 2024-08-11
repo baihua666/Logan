@@ -1,6 +1,7 @@
 package com.meituan.logan.web.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -11,10 +12,13 @@ import java.io.IOException;
  * * @since 2019-11-25 17:01
  */
 public class FileUtil {
+    private static final Logger LOGGER = Logger.getLogger(FileUtil.class);
+
 
     public static File createNewFile(String fileName) {
         File file = getFile(fileName);
         if (file == null) {
+            LOGGER.error("createNewFile error:file is null,fileName=" + fileName);
             return null;
         }
         if (!file.getParentFile().exists()) {
@@ -26,6 +30,7 @@ public class FileUtil {
         try {
             file.createNewFile();
         } catch (IOException e) {
+            LOGGER.error("createNewFile error:", e);
             return null;
         }
         return file;
@@ -35,7 +40,13 @@ public class FileUtil {
         String path = new File("").getAbsolutePath() + File.separator + "logfile" + File.separator;
         File file = new File(path + fileName);
         if (!path.equals(file.getParentFile().getAbsolutePath()+ File.separator)) {
-            return null;
+            LOGGER.error("getFile getParentFile:" + file.getParentFile().getAbsolutePath());
+            path = new File("/root").getAbsolutePath() + File.separator + "logfile" + File.separator;
+            file = new File(path + fileName);
+            if (!path.equals(file.getParentFile().getAbsolutePath()+ File.separator)) {
+                LOGGER.error("getFile getParentFile use custom path error:" + file.getParentFile().getAbsolutePath());
+                return null;
+            }
         }
         return file;
     }

@@ -11,7 +11,7 @@ import {convertBriefsToMinimapBriefs, convertBriefsToLoglistInfiniteScrollBriefs
 import {NUMBER_OF_LOG_IN_SINGLE_PAGE} from "../../../consts/pagination"
 import "./style.scss";
 import {LOG_MOVE_DISTANCE} from "./components/loglist-infinite-scroll/consts";
-import {fetchNativeDownloadUrlApi, fetchWebDownloadUrlApi} from "../../../common/api";
+import {fetchNativeDownloadUrlApi, fetchWebDownloadUrlApi, BASE_URL} from "../../../common/api";
 
 
 
@@ -134,7 +134,8 @@ class LogDetailPage extends Component {
       }
       downloadUrlPromise.then(data => {
         // replace your own download logic here!
-        window.open(`${window.location.origin}${data}`);
+        // window.open(`${window.location.origin}${data}`);
+        window.open(`${BASE_URL}${data}`);
       })
     }
     

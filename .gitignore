@@ -40,3 +40,4 @@ Carthage
 # SwiftPM
 .swiftpm
 .build
+**/target/*
